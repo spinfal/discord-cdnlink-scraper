@@ -28,8 +28,9 @@ pnpm start
 ```
 6. Run the command
 ```
-.scrape
+.scrape [videos only true/false] [amount of messages to scrape].
 ```
+Both are optional, and are not needed
 
 ## Want to see features added?
 Open an issue or pull request and I'll take a look and see if I can add it.

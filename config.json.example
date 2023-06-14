@@ -1,0 +1,34 @@
+{
+  "prefix": ".",
+  "token": "your-bot-token-here",
+  "command": "scrape",
+  "outputFolder": "links",
+  "excludeKeywords": [
+    "avatars",
+    "icons",
+    "banners",
+    "emojis",
+    "stickers"
+  ],
+
+  "videoFormats": [
+    "mp4",
+    "mov",
+    "webm",
+    "avi",
+    "wmv",
+    "flv",
+    "mkv",
+    "m4v",
+    "3gp",
+    "m4p",
+    "m4a",
+    "mpg",
+    "mpeg",
+    "rm",
+    "vob",
+    "asf"
+  ]
+}
+
+rename this file to config.json and remove this line.

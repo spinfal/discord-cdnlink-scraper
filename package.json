@@ -13,6 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "12.5.3",
-    "pretty-log": "^0.1.0"
+    "log-beautify": "^1.2.0"
   }
 }

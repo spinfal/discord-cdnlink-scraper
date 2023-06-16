@@ -2,14 +2,14 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const config = require('./config.json');
-const plog = require('pretty-log');
+const plog = require('log-beautify');
 
 const client = new Discord.Client();
 const PREFIX = config.prefix;
 
 client.once('ready', () => {
   console.clear();
-  plog.debug('Logging in...');
+  plog.info('Logging in...');
   plog.success(`Logged in as ${ client.user.tag }`);
 });
 
@@ -77,7 +77,7 @@ client.on('message', async message => {
     let links = [];
 
     // Fetch a certain number of messages from the channel.
-    plog.debug(`\nFetching ${ messageLimit } messages...`);
+    plog.info(`\nFetching ${ messageLimit } messages...`);
     fetchMessages(message.channel, messageLimit)
       .then(messages => {
 
@@ -88,21 +88,28 @@ client.on('message', async message => {
           const regex = /(https?:\/\/(cdn|media)\.discordapp\.(com|net)\/\S+)/g;
           const found = msg.content.match(regex);
 
-          // If one or more links are found, they are added to the 'links' array.
+          // If one or more links are found, they are added to the "links" array.
           if (found) {
             links = links.concat(found);
-            plog.debug(`Found a link: ${ found } (total: ${ links.length })`);
+            plog.info(`Found a link: ${ found } (total: ${ links.length })`);
           }
+
+          // Check message attachments for links
+          msg.attachments.each(attachment => {
+            links.push(attachment.url);
+            plog.info(`Found an attachment: ${ attachment.url } (total: ${ links.length })`);
+          });
         });
 
         // Check if the found link includes keywords from the config exclude list
+        plog.debug("Checking links for excluded keywords...")
         if (links) {
           if (videosOnly ?? false) {
             links = links.filter(link => {
               const fileExtension = link.split('.').pop().toLowerCase();
               const isVideoFormat = config.videoFormats.includes(fileExtension);
               if (!isVideoFormat) {
-                plog.warn(`Excluding link: ${ link } (not a video file)`);
+                plog.error(`Removing link: ${ link } (not a video file)`);
               }
               return isVideoFormat;
             });
@@ -111,7 +118,7 @@ client.on('message', async message => {
           links = links.filter(link => {
             for (const keyword of config.excludeKeywords) {
               if (link.includes(keyword)) {
-                plog.warn(`Excluding link: ${ link } (keyword: ${ keyword })`);
+                plog.error(`Removing link: ${ link } (keyword: ${ keyword })`);
                 return false;
               }
             }

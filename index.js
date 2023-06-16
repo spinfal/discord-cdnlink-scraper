@@ -49,7 +49,7 @@ async function fetchMessages(channel, limit = 200) {
 client.on("messageCreate", async message => {
   // This if statement checks if the message starts with the defined PREFIX, and if it doesn"t come from another bot.
   // If either of these conditions is not met, the function returns and stops processing the message.
-  if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+  if (!message.content.startsWith(PREFIX) || message.author.id !== client.user.id || message.author.bot) return;
 
   // The "args" constant holds an array of all the "arguments" in the command,
   // which are the words in the message that come after the PREFIX.
@@ -104,13 +104,14 @@ client.on("messageCreate", async message => {
         });
 
         // Check if the found link includes keywords from the config exclude list
+        plog.debug("Checking links for excluded keywords...");
         if (links) {
           if (videosOnly ?? false) {
             links = links.filter(link => {
               const fileExtension = link.split(".").pop().toLowerCase();
               const isVideoFormat = config.videoFormats.includes(fileExtension);
               if (!isVideoFormat) {
-                plog.warn(`Excluding link: ${ link } (not a video file)`);
+                plog.error(`Removing link: ${ link } (not a video file)`);
               }
               return isVideoFormat;
             });
@@ -119,7 +120,7 @@ client.on("messageCreate", async message => {
           links = links.filter(link => {
             for (const keyword of config.excludeKeywords) {
               if (link.includes(keyword)) {
-                plog.warn(`Excluding link: ${ link } (keyword: ${ keyword })`);
+                plog.error(`Removing link: ${ link } (keyword: ${ keyword })`);
                 return false;
               }
             }

@@ -31,5 +31,5 @@ Options for the command can be changed in [config.json.example](config.json.exam
 Open an issue or pull request and I'll take a look and see if I can add it.
 
 ## License
-[MPL-2.0](LICENSE)\
+[GPL-3.0](LICENSE)\
 Made by [spinfal](https://out.spin.rip/home)

@@ -23,7 +23,7 @@ pnpm start
 ```
 5. Run the command
 ```
-.scrape.
+.scrape
 ```
 Options for the command can be changed in [config.json.example](config.json.example)
 

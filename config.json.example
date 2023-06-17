@@ -10,6 +10,7 @@
     "emojis",
     "stickers"
   ],
+  "messageLimit": 100,
 
   "videosOnly": false,
   "videoFormats": [

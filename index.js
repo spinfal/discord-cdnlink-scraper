@@ -62,7 +62,7 @@ client.on("messageCreate", async message => {
   // The "messageLimit" constant is the number of messages to fetch.
   // If an argument was provided (i.e., args[0] exists), it will be used as the message limit.
   // If not, the default and max allowed limit placed by Discord of 100 will be used.
-  const messageLimit = args.length > 0 ? parseInt(args.shift()) : 100;
+  const messageLimit = config.messageLimit ?? 100;
 
   if (messageLimit > 300) plog.warn("Constantly fetching large amounts of messages may cause you and/or the bot to hit Discord's rate limit.");
 

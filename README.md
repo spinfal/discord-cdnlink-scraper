@@ -16,25 +16,20 @@ git clone https://github.com/spinfal/discord-cdnlink-scraper.git
 ```bash
 pnpm install
 ```
-3. Create a Discord bot here: https://discord.com/developers/applications \
-  a. Enable the option shown in the image below\
-  ![Option to Enable: Message Content Intent](https://cdn.spin.rip/r/firefox_3037402965.png)
-  b. Copy the token and invite the bot to your server using this link (add your bot's client ID): https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=274878008320&scope=bot
-  
-4. Duplicate [config.json.example](config.json.example) and rename it to `config.json` and fill in the values
-5. Run the bot
+3. Duplicate [config.json.example](config.json.example) and rename it to `config.json` and fill in the values
+4. Run the bot
 ```bash
 pnpm start
 ```
-6. Run the command
+5. Run the command
 ```
-.scrape [videos only true/false] [amount of messages to scrape].
+.scrape.
 ```
-Both are optional, and are not needed
+Options for the command can be changed in [config.json.example](config.json.example)
 
 ## Want to see features added?
 Open an issue or pull request and I'll take a look and see if I can add it.
 
 ## License
-[MIT](LICENSE)\
+[MPL-2.0](LICENSE)\
 Made by [spinfal](https://out.spin.rip/home)

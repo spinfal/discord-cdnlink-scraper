@@ -11,6 +11,7 @@
     "stickers"
   ],
 
+  "videosOnly": false,
   "videoFormats": [
     "mp4",
     "mov",

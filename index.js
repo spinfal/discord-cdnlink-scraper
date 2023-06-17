@@ -57,22 +57,14 @@ client.on("messageCreate", async message => {
   const args = message.content.slice(PREFIX.length).trim().split(" ");
   const command = args.shift().toLowerCase();
 
-  const videosOnly = isNaN(args[0]) ? args.shift()?.toLowerCase() === "true" : false;
+  const videosOnly = config.videosOnly ?? false;
 
   // The "messageLimit" constant is the number of messages to fetch.
   // If an argument was provided (i.e., args[0] exists), it will be used as the message limit.
   // If not, the default and max allowed limit placed by Discord of 100 will be used.
   const messageLimit = args.length > 0 ? parseInt(args.shift()) : 100;
-  let messageLimitWarning;
 
-  if (messageLimit > 300) {
-    plog.warn("Constantly fetching large amounts of messages may cause you and/or the bot to hit Discord's rate limit.");
-    messageLimitWarning = await message.channel.send("Fetching large amounts of messages may cause you and/or the bot to hit Discord's rate limit. (this message will self destruct)");
-  }
-
-  if (command === "help") {
-    message.channel.send("The only command available is `.scrape [videos only true/false] [amount of messages to scrape]`. Both are optional, and are not needed.");
-  }
+  if (messageLimit > 300) plog.warn("Constantly fetching large amounts of messages may cause you and/or the bot to hit Discord's rate limit.");
 
   // Check if the command is the one specified in the configuration.
   if (command === config.command) {
@@ -159,20 +151,13 @@ client.on("messageCreate", async message => {
         // Check if the txt file exists
         if (fs.existsSync(fileName)) {
           plog.success(`Scrape completed and links saved to ${ fileName }\nTotal links found: ${ links.length }\nNew links found: ${ uniqueLinks.length }\n`);
-          message.channel.send(`Scrape completed and links saved to \`${ fileName }\`.\nTotal links found: ${ links.length }\nNew links found: ${ uniqueLinks.length }`);
         } else {
           plog.warn(`Scrape completed but no links were found.`);
-          message.channel.send(`Scrape completed but no links were found.`);
         }
-
-        setTimeout(async () => {
-          messageLimitWarning ? await messageLimitWarning.delete() : null;
-        }, 5000);
       })
       .catch((error) => {
         // console.error(error);
         plog.error(error); // If an error occurs during the fetch operation, it is logged to the console.
-        message.channel.send(`An error occurred while fetching messages:\n\`${ error }\``);
       });
   }
 });

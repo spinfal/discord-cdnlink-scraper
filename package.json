@@ -4,7 +4,6 @@
   "description": "a discord bot that scrapes CDN links from messages in a channel",
   "main": "index.js",
   "scripts": {
-    "install": "npm i -g pnpm && pnpm i",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
